@@ -5,6 +5,7 @@ import (
 	"github.com/rancher/norman/types"
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	kontainer "github.com/rancher/kontainer-engine/types"
 )
 
 type ClusterConditionType string
@@ -54,6 +55,8 @@ type ClusterSpec struct {
 	RancherKubernetesEngineConfig        *RancherKubernetesEngineConfig `json:"rancherKubernetesEngineConfig,omitempty"`
 	DefaultPodSecurityPolicyTemplateName string                         `json:"defaultPodSecurityPolicyTemplateName,omitempty" norman:"type=reference[podSecurityPolicyTemplate]"`
 	DefaultClusterRoleForProjectMembers  string                         `json:"defaultClusterRoleForProjectMembers,omitempty" norman:"type=reference[roleTemplate]"`
+	Version                              kontainer.KubernetesVersion    `json:"kubernetesVersion,omitempty"`
+	NodeCount                            kontainer.NodeCount            `json:"nodeCount,omitempty"`
 }
 
 type ImportedConfig struct {
@@ -113,16 +116,12 @@ type GoogleKubernetesEngineConfig struct {
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
 	// An optional description of this cluster
 	Description string `json:"description,omitempty"`
-	// The number of nodes in this cluster
-	NodeCount int64 `json:"nodeCount,omitempty" norman:"required"`
 	// Size of the disk attached to each node
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 	// The name of a Google Compute Engine
 	MachineType string `json:"machineType,omitempty"`
 	// Node kubernetes version
 	NodeVersion string `json:"nodeVersion,omitempty"`
-	// the master kubernetes version
-	MasterVersion string `json:"masterVersion,omitempty"`
 	// The map of Kubernetes labels (key/value pairs) to be applied
 	// to each node.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -159,8 +158,6 @@ type AzureKubernetesServiceConfig struct {
 	Location string `json:"location,omitempty"`
 	// Resource tags
 	Tag map[string]string `json:"tags,omitempty"`
-	// Number of agents (VMs) to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1.
-	Count int64 `json:"count,omitempty"`
 	// DNS prefix to be used to create the FQDN for the agent pool.
 	AgentDNSPrefix string `json:"agentDnsPrefix,,omitempty"`
 	// FDQN for the agent pool
@@ -169,8 +166,6 @@ type AzureKubernetesServiceConfig struct {
 	OsDiskSizeGB int64 `json:"osDiskSizeGb,omitempty"`
 	// Size of agent VMs
 	AgentVMSize string `json:"agentVmSize,omitempty"`
-	// Version of Kubernetes specified when creating the managed cluster
-	KubernetesVersion string `json:"kubernetesVersion,omitempty"`
 	// Path to the public key to use for SSH into cluster
 	SSHPublicKeyContents string `json:"sshPublicKeyContents,omitempty" norman:"required"`
 	// Kubernetes Master DNS prefix (must be unique within Azure)

@@ -19,8 +19,6 @@ type RancherKubernetesEngineConfig struct {
 	Authorization AuthzConfig `yaml:"authorization" json:"authorization,omitempty"`
 	// Enable/disable strict docker version checking
 	IgnoreDockerVersion bool `yaml:"ignore_docker_version" json:"ignoreDockerVersion"`
-	// Kubernetes version to use (if kubernetes image is specifed, image version takes precedence)
-	Version string `yaml:"kubernetes_version" json:"kubernetesVersion,omitempty"`
 	// List of private registries and their credentials
 	PrivateRegistries []PrivateRegistry `yaml:"private_registries" json:"privateRegistries,omitempty"`
 	// Ingress controller used in the cluster
