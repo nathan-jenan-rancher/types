@@ -12,6 +12,7 @@ const (
 	AzureKubernetesServiceConfigFieldCount                       = "count"
 	AzureKubernetesServiceConfigFieldDNSServiceIP                = "dnsServiceIp"
 	AzureKubernetesServiceConfigFieldDockerBridgeCIDR            = "dockerBridgeCidr"
+	AzureKubernetesServiceConfigFieldHTTPApplicationRouting      = "httpApplicationRouting"
 	AzureKubernetesServiceConfigFieldKubernetesVersion           = "kubernetesVersion"
 	AzureKubernetesServiceConfigFieldLocation                    = "location"
 	AzureKubernetesServiceConfigFieldMasterDNSPrefix             = "masterDnsPrefix"
@@ -38,6 +39,7 @@ type AzureKubernetesServiceConfig struct {
 	Count                       int64             `json:"count,omitempty" yaml:"count,omitempty"`
 	DNSServiceIP                string            `json:"dnsServiceIp,omitempty" yaml:"dnsServiceIp,omitempty"`
 	DockerBridgeCIDR            string            `json:"dockerBridgeCidr,omitempty" yaml:"dockerBridgeCidr,omitempty"`
+	HTTPApplicationRouting      *bool             `json:"httpApplicationRouting,omitempty" yaml:"httpApplicationRouting,omitempty"`
 	KubernetesVersion           string            `json:"kubernetesVersion,omitempty" yaml:"kubernetesVersion,omitempty"`
 	Location                    string            `json:"location,omitempty" yaml:"location,omitempty"`
 	MasterDNSPrefix             string            `json:"masterDnsPrefix,omitempty" yaml:"masterDnsPrefix,omitempty"`
