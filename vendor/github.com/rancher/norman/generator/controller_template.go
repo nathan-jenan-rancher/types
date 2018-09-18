@@ -119,12 +119,8 @@ func (c *{{.schema.ID}}Controller) Lister() {{.schema.CodeName}}Lister {
 
 
 func (c *{{.schema.ID}}Controller) AddHandler(name string, handler {{.schema.CodeName}}HandlerFunc) {
-	c.GenericController.AddHandler(name, func(key string) error {
-		obj, exists, err := c.Informer().GetStore().GetByKey(key)
-		if err != nil {
-			return err
-		}
-		if !exists {
+	c.GenericController.AddHandler(name, func(key string, obj interface{}) error {
+		if obj == nil {
 			return handler(key, nil)
 		}
 		return handler(key, obj.(*{{.prefix}}{{.schema.CodeName}}))
@@ -132,15 +128,7 @@ func (c *{{.schema.ID}}Controller) AddHandler(name string, handler {{.schema.Cod
 }
 
 func (c *{{.schema.ID}}Controller) AddClusterScopedHandler(name, cluster string, handler {{.schema.CodeName}}HandlerFunc) {
-	c.GenericController.AddHandler(name, func(key string) error {
-		obj, exists, err := c.Informer().GetStore().GetByKey(key)
-		if err != nil {
-			return err
-		}
-		if !exists {
-			return handler(key, nil)
-		}
-
+	c.GenericController.AddHandler(name, func(key string, obj interface{}) error {
 		if !controller.ObjectInCluster(cluster, obj) {
 			return nil
 		}
